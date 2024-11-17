@@ -37,6 +37,23 @@ class ListFragment : Fragment(), BottomSheetFragment.ReturnCallback {
     private fun getItems() = buttons + ProfilesRepository.profiles
 
     private var listType = ListType.List
+        set(value) {
+            field = value
+            if (value == ListType.List) {
+                swipeDeleteTouchHelper.attachToRecyclerView(binding.profiles)
+            } else {
+                swipeDeleteTouchHelper.attachToRecyclerView(null)
+            }
+        }
+
+    private val swipeDeleteTouchHelper by lazy {
+        SwipeDeleteTouchHelper { index ->
+            ProfilesRepository.update {
+                removeAt(index - 3)
+            }
+            updateItems()
+        }
+    }
 
     private fun spanSizeFrom(position: Int): Int {
         return when (position) {
@@ -97,7 +114,7 @@ class ListFragment : Fragment(), BottomSheetFragment.ReturnCallback {
     }
 
     private fun onItemLongClick(item: MultiEntity) {
-        if (item is ProfileEntity) {
+        if (item is ProfileEntity && listType == ListType.Grid) {
             AlertDialog.Builder(requireContext())
                 .setTitle(getString(R.string.delete_question, item.name))
                 .setPositiveButton(getString(R.string.yes)) { _, _ ->
@@ -123,12 +140,7 @@ class ListFragment : Fragment(), BottomSheetFragment.ReturnCallback {
                 adapter = recyclerAdapter
                 layoutManager = gridLayoutManager()
                 addItemDecoration(SpacingDecoration(12))
-                SwipeDeleteTouchHelper { index ->
-                    ProfilesRepository.update {
-                        removeAt(index - 3)
-                    }
-                    updateItems()
-                }.attachToRecyclerView(this)
+                swipeDeleteTouchHelper.attachToRecyclerView(this)
             }
             addFab.setOnClickListener {
                 val fragment = BottomSheetFragment()
