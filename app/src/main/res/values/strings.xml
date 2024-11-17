@@ -9,4 +9,14 @@
     <string name="data">Data: %1$s</string>
     <string name="save">Save</string>
     <string name="go_to_bottom_sheet">Go to bottom sheet</string>
+    <string name="add">Add</string>
+    <string name="add_multi">Add multi</string>
+    <string name="delete_multi">Delete multi</string>
+    <string name="delete">Delete</string>
+    <string name="name">Name</string>
+    <string name="bio">Bio</string>
+    <string name="not_found_this_id">Not found this id: %1$s</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="delete_question">Delete %1$s?</string>
 </resources>
