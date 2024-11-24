@@ -1,23 +1,30 @@
 package com.renattele.sma1
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import com.renattele.sma1.databinding.ActivityMainBinding
+import com.renattele.sma1.utils.NavigationAction
+import com.renattele.sma1.utils.ScreenTags
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : BaseActivity() {
+    private var binding: ActivityMainBinding? = null
+    override val mainContainerId: Int = R.id.fragment_container_view
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .setReorderingAllowed(true)
-                .add(R.id.fragment_container_view, FirstFragment())
-                .commit()
+        binding = ActivityMainBinding.inflate(layoutInflater).apply {
+            setContentView(root)
         }
+        if (savedInstanceState == null) {
+            navigate(
+                destination = ListFragment(),
+                destinationTag = ScreenTags.LIST_TAG,
+                action = NavigationAction.ADD
+            )
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }
