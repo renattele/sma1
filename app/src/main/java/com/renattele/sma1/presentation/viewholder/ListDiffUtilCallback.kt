@@ -4,16 +4,18 @@ import androidx.recyclerview.widget.DiffUtil
 
 class ListDiffUtilCallback<T>(
     private val old: List<T>,
-    private val new: List<T>
-): DiffUtil.Callback() {
+    private val new: List<T>,
+    private val same: (T, T) -> Boolean = { t1, t2 -> t1 === t2 },
+    private val equals: (T, T) -> Boolean = { t1, t2 -> t1 == t2 },
+) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = old.size
     override fun getNewListSize(): Int = new.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return old[oldItemPosition] === new[newItemPosition]
+        return same(old[oldItemPosition], new[newItemPosition])
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return old[oldItemPosition] == new[newItemPosition]
+        return equals(old[oldItemPosition], new[newItemPosition])
     }
 }
