@@ -1,7 +1,10 @@
-package com.renattele.sma1
+package com.renattele.sma1.presentation.activity
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
+import com.renattele.sma1.R
 import com.renattele.sma1.databinding.ActivityMainBinding
+import com.renattele.sma1.presentation.fragment.SurveyFragment
 import com.renattele.sma1.utils.NavigationAction
 import com.renattele.sma1.utils.ScreenTags
 
@@ -11,13 +14,14 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(root)
         }
         if (savedInstanceState == null) {
             navigate(
-                destination = ListFragment(),
-                destinationTag = ScreenTags.LIST_TAG,
+                destination = SurveyFragment(),
+                destinationTag = ScreenTags.SURVEY_TAG,
                 action = NavigationAction.ADD
             )
         }

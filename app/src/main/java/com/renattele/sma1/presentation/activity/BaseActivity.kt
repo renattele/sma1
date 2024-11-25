@@ -1,4 +1,4 @@
-package com.renattele.sma1
+package com.renattele.sma1.presentation.activity
 
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
