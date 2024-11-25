@@ -1,4 +1,4 @@
-package com.renattele.sma1
+package com.renattele.sma1.presentation.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,17 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
+import com.renattele.sma1.R
 import com.renattele.sma1.data.SurveysRepository
 import com.renattele.sma1.databinding.FragmentSurveyBinding
-import com.renattele.sma1.domain.SurveyQuestion
 import com.renattele.sma1.presentation.adapter.SurveyPagerAdapter
+import com.renattele.sma1.utils.CheckListener
 
-class SurveyFragment : Fragment() {
+class SurveyFragment : Fragment(), CheckListener {
     private var _binding: FragmentSurveyBinding? = null
     private val binding get() = _binding!!
 
     private val adapter by lazy {
-        SurveyPagerAdapter(onAnswer = ::onAnswer, SurveysRepository.questions)
+        SurveyPagerAdapter(SurveysRepository.questions.size, parentFragmentManager, lifecycle)
     }
 
     override fun onCreateView(
@@ -71,13 +72,7 @@ class SurveyFragment : Fragment() {
         }
     }
 
-    private fun onAnswer(question: SurveyQuestion, answer: Int) {
-        SurveysRepository.update {
-            val index = indexOfFirst { it.id == question.id }
-            if (index == -1) return@update
-            this[index] = this[index].copy(selectedAnswer = answer)
-        }
-        adapter.update(SurveysRepository.questions)
+    override fun onCheck(position: Int) {
         updatePageInfo()
     }
 }

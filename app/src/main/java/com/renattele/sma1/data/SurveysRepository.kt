@@ -3,11 +3,16 @@ package com.renattele.sma1.data
 import com.renattele.sma1.domain.SurveyQuestion
 
 object SurveysRepository {
-    val questions by lazy {
+    private val _questions by lazy {
         mutableListOf(
             SurveyQuestion(
                 question = "How do you usually spend your weekends?",
-                answers = listOf("Relaxing at home", "Exploring outdoors", "Socializing with friends", "Working on personal projects")
+                answers = listOf(
+                    "Relaxing at home",
+                    "Exploring outdoors",
+                    "Socializing with friends",
+                    "Working on personal projects"
+                )
             ),
             SurveyQuestion(
                 question = "What kind of music do you enjoy the most?",
@@ -31,7 +36,12 @@ object SurveysRepository {
             ),
             SurveyQuestion(
                 question = "How do you prefer to celebrate your birthday?",
-                answers = listOf("A quiet day with family", "A big party with friends", "A solo trip", "I don't celebrate birthdays")
+                answers = listOf(
+                    "A quiet day with family",
+                    "A big party with friends",
+                    "A solo trip",
+                    "I don't celebrate birthdays"
+                )
             ),
             SurveyQuestion(
                 question = "What is your favorite season of the year?",
@@ -39,11 +49,21 @@ object SurveysRepository {
             ),
             SurveyQuestion(
                 question = "How do you usually spend your vacations?",
-                answers = listOf("Traveling abroad", "Visiting family", "Exploring local attractions", "Staying at home and relaxing")
+                answers = listOf(
+                    "Traveling abroad",
+                    "Visiting family",
+                    "Exploring local attractions",
+                    "Staying at home and relaxing"
+                )
             ),
             SurveyQuestion(
                 question = "What do you enjoy most about weekends?",
-                answers = listOf("Sleeping in", "Spending time with family", "Catching up on hobbies", "Getting ahead on work")
+                answers = listOf(
+                    "Sleeping in",
+                    "Spending time with family",
+                    "Catching up on hobbies",
+                    "Getting ahead on work"
+                )
             ),
             SurveyQuestion(
                 question = "Which beverage do you prefer to start your day with?",
@@ -55,8 +75,10 @@ object SurveysRepository {
             )
         )
     }
+    val questions: List<SurveyQuestion> = _questions
+
     @Synchronized
     fun update(block: MutableList<SurveyQuestion>.() -> Unit) {
-        questions.block()
+        _questions.block()
     }
 }

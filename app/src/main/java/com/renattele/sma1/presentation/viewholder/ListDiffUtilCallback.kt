@@ -6,6 +6,7 @@ class ListDiffUtilCallback<T>(
     private val old: List<T>,
     private val new: List<T>,
     private val same: (T, T) -> Boolean = { t1, t2 -> t1 === t2 },
+    private val changePayload: (T, T) -> Boolean = { t1, t2 -> t1 == t2 },
     private val equals: (T, T) -> Boolean = { t1, t2 -> t1 == t2 },
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = old.size
@@ -17,5 +18,9 @@ class ListDiffUtilCallback<T>(
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return equals(old[oldItemPosition], new[newItemPosition])
+    }
+
+    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
+        return changePayload(old[oldItemPosition], new[newItemPosition])
     }
 }
