@@ -83,7 +83,7 @@ class NotificationFragment : Fragment() {
             avatarDeleteButton.setOnClickListener {
                 deleteAvatar()
             }
-            val priorities = listOf("Max", "Default", "Low", "Min")
+            val priorities = NotificationPriority.entries
             val prioritiesAdapter =
                 ArrayAdapter(requireContext(), R.layout.autocomplete_list_item, priorities)
             prioritySpinner.adapter = prioritiesAdapter
@@ -136,12 +136,8 @@ class NotificationFragment : Fragment() {
     private fun tryShowNotification() {
         val title = binding.notificationHeaderEditTextLayout.editText?.text
         val body = binding.notificationBodyEditTextLayout.editText?.text
-        val priorityText = binding.prioritySpinner.selectedItem.toString()
-        val priority =
-            NotificationPriority.entries
-                .find {
-                    getString(it.title) == priorityText
-                }
+        val priorityText = binding.prioritySpinner.selectedItem
+        val priority = priorityText as? NotificationPriority
 
         if (title.isNullOrBlank()) {
             binding.root.showSnackbar(getString(R.string.please_fill_notification_header))
