@@ -25,4 +25,25 @@
     <string name="next">Next</string>
     <string name="finish">Finish</string>
     <string name="answers_saved">Answers saved</string>
+    <string name="avatar">Avatar</string>
+    <string name="input_text">Input text</string>
+    <string name="header_of_notification">Header of notification</string>
+    <string name="body_of_notification">Body of notification</string>
+    <string name="priority_of_notification">Priority of notification</string>
+    <string name="choose_option">Choose option</string>
+    <string name="show_notification">Show notification</string>
+    <string name="clear_theme">Clear theme</string>
+    <string name="avatar_is_already_set">Avatar is already set</string>
+    <string name="test_notification_channel">Test</string>
+    <string name="empty_header">Empty header</string>
+    <string name="empty_body">Empty body</string>
+    <string name="max_importance">Max</string>
+    <string name="high_importance">High</string>
+    <string name="default_importance">Default</string>
+    <string name="low_importance">Low</string>
+    <string name="min_importance">Min</string>
+    <string name="please_fill_notification_header">Please fill notification header</string>
+    <string name="please_fill_notification_body">Please fill notification body</string>
+    <string name="please_fill_priority">Please fill priority</string>
+    <string name="launched_from_notification">Launched from notification</string>
 </resources>
