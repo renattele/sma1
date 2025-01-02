@@ -13,8 +13,9 @@ import com.renattele.sma1.utils.showToast
 class MainActivity : BaseActivity() {
     private var binding: ActivityMainBinding? = null
     override val mainContainerId: Int = R.id.fragment_container_view
+
     companion object {
-        const val FROM_NOTIFICATION_KEY = "from_notification"
+        const val FROM_NOTIFICATION_KEY = "FROM_NOTIFICATION"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +33,7 @@ class MainActivity : BaseActivity() {
         if (savedInstanceState == null) {
             navigate(
                 destination = NotificationFragment(),
-                destinationTag = ScreenTags.SURVEY_TAG,
+                destinationTag = ScreenTags.NOTIFICATION_TAG,
                 action = NavigationAction.ADD,
                 isAddToBackStack = false
             )

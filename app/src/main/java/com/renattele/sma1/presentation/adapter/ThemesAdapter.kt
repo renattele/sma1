@@ -1,12 +1,11 @@
 package com.renattele.sma1.presentation.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.renattele.sma1.databinding.ItemThemeBinding
 import com.renattele.sma1.domain.Theme
 import com.renattele.sma1.presentation.viewholder.ThemeViewHolder
-import com.renattele.sma1.utils.inflate
+import com.renattele.sma1.utils.attachBinding
 
 class ThemesAdapter(
     private val themes: List<Theme>,
@@ -15,7 +14,7 @@ class ThemesAdapter(
     override fun getItemCount(): Int = themes.size
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ThemeViewHolder {
         return ThemeViewHolder(
-            inflate(parent, ItemThemeBinding::inflate),
+            parent.attachBinding(ItemThemeBinding::inflate),
             onClick
         )
     }
