@@ -47,5 +47,3 @@ abstract class BaseActivity : AppCompatActivity() {
         transaction.setReorderingAllowed(true).commit()
     }
 }
-
-fun Activity.baseActivity(): BaseActivity = this as BaseActivity
