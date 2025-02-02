@@ -1,47 +1,23 @@
 package com.renattele.sma1.presentation.activity
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.renattele.sma1.R
-import com.renattele.sma1.app
-import com.renattele.sma1.databinding.ActivityMainBinding
-import com.renattele.sma1.presentation.fragment.NotificationFragment
-import com.renattele.sma1.utils.NavigationAction
-import com.renattele.sma1.utils.ScreenTags
-import com.renattele.sma1.utils.showToast
+import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import com.renattele.sma1.presentation.screen.MainScreen
 
-class MainActivity : BaseActivity() {
-    private var binding: ActivityMainBinding? = null
-    override val mainContainerId: Int = R.id.fragment_container_view
-
-    companion object {
-        const val FROM_NOTIFICATION_KEY = "FROM_NOTIFICATION"
-    }
-
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        app.theme?.let { theme ->
-            setTheme(theme.themeResource)
-        }
-        if (intent.getBooleanExtra(FROM_NOTIFICATION_KEY, false)) {
-            showToast(getString(R.string.launched_from_notification))
-        }
         enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater).apply {
-            setContentView(root)
+        setContent {
+            Surface(Modifier.safeDrawingPadding()) {
+                MainScreen()
+            }
         }
-        if (savedInstanceState == null) {
-            navigate(
-                destination = NotificationFragment(),
-                destinationTag = ScreenTags.NOTIFICATION_TAG,
-                action = NavigationAction.ADD,
-                isAddToBackStack = false
-            )
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
     }
 }
