@@ -102,26 +102,25 @@ fun rememberMainScreenState(): MainScreenState {
             }
 
             MainScreenEvent.Run -> {
+                if (isCoroutineCountInvalid) return@MainScreenState
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
                 if (job?.isActive == true) {
                     context.showToast(context.getString(R.string.process_is_already_running))
-                } else if (!isCoroutineCountInvalid) {
-                    job =
-                        coroutineScope.launch(SupervisorJob() + CoroutineExceptionHandler { _, throwable ->
-                            context.showToast(
-                                context.getString(
-                                    R.string.exception,
-                                    throwable.message
-                                )
+                } else job =
+                    coroutineScope.launch(SupervisorJob() + CoroutineExceptionHandler { _, throwable ->
+                        context.showToast(
+                            context.getString(
+                                R.string.exception,
+                                throwable.message
                             )
-                        }) {
-                            workload(coroutinesCount.toInt(), coroutineType, dispatcher) {
-                                completedCount = it
-                            }
+                        )
+                    }) {
+                        workload(coroutinesCount.toInt(), coroutineType, dispatcher) {
+                            completedCount = it
                         }
-                }
+                    }
             }
 
             MainScreenEvent.Cancel -> {
