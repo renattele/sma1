@@ -156,11 +156,11 @@ private suspend fun workload(
                 }
             }
         } else {
-            launch {
-                repeat(count) {
+            repeat(count) {
+                launch {
                     delay(Random.nextLong(20))
                     completedCount(++completed)
-                }
+                }.join()
             }
         }
     }
