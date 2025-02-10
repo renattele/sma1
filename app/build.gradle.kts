@@ -1,16 +1,17 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "com.renattele.sma1"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.renattele.sma1"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -32,10 +33,23 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 }
 
 dependencies {
+    val composeBom = platform("androidx.compose:compose-bom:2025.01.00")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.ui)
+
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
+
+    implementation(libs.androidx.activity.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
