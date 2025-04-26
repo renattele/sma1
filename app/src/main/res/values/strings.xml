@@ -1,24 +1,16 @@
 <resources>
-    <string name="app_name">SMA1</string>
-    <string name="name">Name</string>
-    <string name="passwords_don_t_match">Passwords don\'t match</string>
-    <string name="repeat_password">Repeat password</string>
-    <string name="password">Password</string>
-    <string name="username">Username</string>
-    <string name="sign_in">Sign in</string>
-    <string name="sign_up">Sign up</string>
-    <string name="or_sign_in_instead">…or sign in instead</string>
-    <string name="or_sign_up_instead">…or sign up instead</string>
-    <string name="already_registered">This user is already registered</string>
-    <string name="failed_to_register">Failed to register this user</string>
-    <string name="wrong_credentials">Wrong credentials</string>
-    <string name="hello">Hello, %1$s!</string>
-    <string name="my_wallpapers">My Wallpapers</string>
-    <string name="empty_name">Name is empty</string>
-    <string name="empty_picture">Picture is not present</string>
-    <string name="failed_to_create_wallpaper">Failed to create wallpaper</string>
-    <string name="add_wallpaper">Add wallpaper</string>
-    <string name="description">Description</string>
-    <string name="logout">Logout</string>
-    <string name="failed_to_delete">Failed to delete</string>
+    <string name="app_name">SmartBudget</string>
+    <string name="database_name" translatable="false">db</string>
+
+    <string name="label_delete">Delete</string>
+    <string name="label_done">Done</string>
+    <string name="label_recommended_goal">Recommended goal</string>
+
+    <string name="label_smart_budget">Smart Budget</string>
+    <string name="label_categories">Categories</string>
+    <string name="label_add_transaction">Add transaction</string>
+    <string name="label_money">%1$s₽</string>
+    <string name="label_remaining_money">%1$s₽ remaining</string>
+    <string name="label_very_long">Long Long Long Long Long Long Long Long Long Long Long Long</string>
+    <string name="label_percent">%1$d%%</string>
 </resources>
