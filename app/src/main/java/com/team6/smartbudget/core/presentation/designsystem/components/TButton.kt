@@ -22,12 +22,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.team6.smartbudget.sma1.R
 import com.team6.smartbudget.core.presentation.designsystem.theme.ProvideTextStyleAndColor
 import com.team6.smartbudget.core.presentation.designsystem.theme.TPreviewTheme
 import com.team6.smartbudget.core.presentation.designsystem.theme.TTheme
 import com.team6.smartbudget.core.presentation.designsystem.theme.bold
 import com.team6.smartbudget.core.presentation.util.runWhenNotNull
+import com.team6.smartbudget.sma1.R
 
 private const val DisabledOpacity = 0.56f
 
