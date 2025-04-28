@@ -8,9 +8,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -29,13 +27,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.team6.smartbudget.sma1.R
 import com.team6.smartbudget.core.presentation.designsystem.theme.ProvideTextStyleAndColor
 import com.team6.smartbudget.core.presentation.designsystem.theme.TPreviewTheme
 import com.team6.smartbudget.core.presentation.designsystem.theme.TTheme
 import com.team6.smartbudget.core.presentation.util.PhoneVisualTransformation
 import com.team6.smartbudget.core.presentation.util.SeparatorEveryThreeVisualTransformation
 import com.team6.smartbudget.core.presentation.util.runWhenNotNull
+import com.team6.smartbudget.sma1.R
 
 @Composable
 fun TTextField(
