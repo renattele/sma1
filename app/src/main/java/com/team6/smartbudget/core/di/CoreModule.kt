@@ -5,8 +5,9 @@ import android.util.Log
 import androidx.datastore.core.DataStore
 import com.team6.smartbudget.core.data.AppSettings
 import com.team6.smartbudget.core.data.UuidSerializer
+import com.team6.smartbudget.core.data.network.LastFmResponseJsonSerializer
 import com.team6.smartbudget.core.data.serializableDataStore
-import dagger.Binds
+import com.team6.smartbudget.core.domain.network.LastFmResponse
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -15,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.contextual
 import javax.inject.Singleton
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -44,6 +46,7 @@ open class CoreProvidesModule {
         prettyPrint = true
         serializersModule = SerializersModule {
             contextual(Uuid::class) { UuidSerializer }
+            contextual(LastFmResponse::class) { LastFmResponseJsonSerializer(it[0]) }
         }
     }
 
