@@ -9,8 +9,14 @@ import javax.inject.Inject
 class DomainInterceptor @Inject constructor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val newUrl = (BuildConfig.API_BASE_URL + request.url.encodedPath.trim('/'))
-            .toHttpUrlOrNull() ?: request.url
+        val newUrl =
+            (
+                BuildConfig.API_BASE_URL +
+                    request.url.encodedPath.trim('/') +
+                    "?" +
+                    (request.url.encodedQuery ?: "")
+            )
+                .toHttpUrlOrNull() ?: request.url
         return chain.proceed(
             request
                 .newBuilder()
