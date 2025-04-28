@@ -1,15 +1,16 @@
 package com.team6.smartbudget.core.di
 
 import com.team6.smartbudget.core.domain.ApplicationConfig
+import com.team6.smartbudget.core.presentation.config.CoilImageLoaderConfig
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import dagger.multibindings.ElementsIntoSet
+import dagger.multibindings.IntoSet
 import javax.inject.Singleton
 
 @Module
-class ConfigsModule {
-    @Provides
-    @ElementsIntoSet
+interface ConfigsModule {
+    @Binds
+    @IntoSet
     @Singleton
-    fun provideConfigs(): Set<ApplicationConfig> = emptySet()
+    fun bindCoilImageLoaderConfig(config: CoilImageLoaderConfig): ApplicationConfig
 }
