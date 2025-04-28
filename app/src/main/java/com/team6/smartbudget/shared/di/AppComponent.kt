@@ -7,8 +7,8 @@ import com.team6.smartbudget.core.di.ConfigsModule
 import com.team6.smartbudget.core.di.CoreModule
 import com.team6.smartbudget.core.domain.ApplicationConfig
 import com.team6.smartbudget.core.presentation.viewmodel.ViewModelFactoryModule
-import com.team6.smartbudget.core.presentation.viewmodel.ViewModelModule
-import com.team6.smartbudget.features.categories.di.CategoriesModule
+import com.team6.smartbudget.features.details.di.DetailsModule
+import com.team6.smartbudget.features.overview.di.OverviewModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -17,12 +17,11 @@ import javax.inject.Singleton
 @Component(
     modules = [
         CoreModule::class,
-        ViewModelModule::class,
         ViewModelFactoryModule::class,
         ConfigsModule::class,
-        SharedModule::class,
 
-        CategoriesModule::class,
+        OverviewModule::class,
+        DetailsModule::class,
     ],
 )
 interface AppComponent {
