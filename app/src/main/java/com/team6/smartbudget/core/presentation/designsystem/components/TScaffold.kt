@@ -25,11 +25,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.team6.smartbudget.sma1.R
 import com.team6.smartbudget.core.presentation.designsystem.theme.ProvideTextStyle
 import com.team6.smartbudget.core.presentation.designsystem.theme.TPreviewTheme
 import com.team6.smartbudget.core.presentation.designsystem.theme.TTheme
 import com.team6.smartbudget.core.presentation.util.plus
+import com.team6.smartbudget.sma1.R
 
 private val TopBarHeight = 80.dp
 private val FabHeight = 80.dp
@@ -42,7 +42,11 @@ fun TScaffold(
     backButton: (@Composable () -> Unit)? = null,
     content: @Composable (padding: PaddingValues) -> Unit,
 ) {
-    Box(modifier.fillMaxSize()) {
+    Box(
+        modifier
+            .fillMaxSize()
+            .background(TTheme.colorScheme.background),
+    ) {
         val topPadding = if (backButton != null || title != null) {
             TopBarHeight
         } else {
@@ -62,8 +66,8 @@ fun TScaffold(
             title = title,
             backButton = backButton,
             modifier = Modifier
-                .padding(WindowInsets.statusBars.asPaddingValues())
-                .background(TTheme.colorScheme.background),
+                .background(TTheme.colorScheme.background)
+                .padding(WindowInsets.statusBars.asPaddingValues()),
         )
         if (floatingActionButton != null) {
             Box(
