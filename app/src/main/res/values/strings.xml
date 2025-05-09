@@ -25,4 +25,6 @@
     <string name="placeholder_long">Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very Very
         Long
     </string>
+    <string name="label_latest_result">Latest result</string>
+    <string name="label_from_cache">Cached</string>
 </resources>

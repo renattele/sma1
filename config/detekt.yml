@@ -17,6 +17,7 @@ complexity:
   TooManyFunctions:
     ignoreAnnotated: [ 'Preview' ]
   LongParameterList:
+    active: false
     ignoreDefaultParameters: true
 
 style:

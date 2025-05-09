@@ -21,4 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "SmartBudget"
 include(":app")
- 
+include(":features:onboarding")
+
+include(":core:data")
+include(":core:domain")
+include(":core:ui")
