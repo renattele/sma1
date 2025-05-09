@@ -17,9 +17,6 @@ interface LocalTrackDetailsDataSource {
         artist: String
     ): LocalTrackDetailsDto?
 
-    @Query("update tracks set accessedCount = accessedCount + 1 where id = :id")
-    suspend fun incrementAccessCount(id: Long)
-
     @Delete
     suspend fun delete(track: LocalTrackDetailsDto)
 }

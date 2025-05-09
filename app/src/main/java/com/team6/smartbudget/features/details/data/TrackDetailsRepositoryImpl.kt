@@ -2,8 +2,6 @@ package com.team6.smartbudget.features.details.data
 
 import com.team6.smartbudget.core.domain.exception.InvalidApiKeyException
 import com.team6.smartbudget.core.domain.network.LastFmResponse
-import com.team6.smartbudget.core.util.Date
-import com.team6.smartbudget.core.util.hasPassed
 import com.team6.smartbudget.features.details.data.local.LocalTrackDetailsDataSource
 import com.team6.smartbudget.features.details.data.local.mapper.LocalTrackDetailsMapper
 import com.team6.smartbudget.features.details.data.remote.RemoteTrackDetailsDataSource
@@ -15,10 +13,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.net.HttpURLConnection
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration.Companion.minutes
 
-private val DEFAULT_CACHE_MAX_AGE = 50.seconds
-private const val DEFAULT_CACHE_MAX_ACCESS_COUNT = 3
+private val DEFAULT_CACHE_DURATION = 5.minutes
+private const val MAX_REQUESTS_BETWEEN_SAME_KEY = 3
 
 class TrackDetailsRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteTrackDetailsDataSource,
@@ -28,8 +26,9 @@ class TrackDetailsRepositoryImpl @Inject constructor(
     private val coroutineScope: CoroutineScope
 ) : TrackDetailsRepository {
 
-    private val recentRequests = mutableListOf<String>()
-    private val maxTrackedRequests = DEFAULT_CACHE_MAX_ACCESS_COUNT + 1
+    private val cacheTimestamps = mutableMapOf<String, Long>()
+
+    private val requestHistory = mutableListOf<String>()
 
     override suspend fun getTrackDetails(
         artist: String,
@@ -39,51 +38,50 @@ class TrackDetailsRepositoryImpl @Inject constructor(
 
         val localTrackDetails = localDataSource.getByTitleAndArtist(title, artist)
 
-        if (localTrackDetails != null &&
-            !Date(localTrackDetails.updatedAt).hasPassed(DEFAULT_CACHE_MAX_AGE) &&
-            shouldUseCache(cacheKey)
-        ) {
+        val shouldUseCache = synchronized(this) {
+            val lastAccessTime = cacheTimestamps[cacheKey]
+
+            if (lastAccessTime != null) {
+                val timeSinceLastAccess = System.currentTimeMillis() - lastAccessTime
+                val cacheNotExpired = timeSinceLastAccess < DEFAULT_CACHE_DURATION.inWholeMilliseconds
+
+                // Check how many other unique requests have been made since last access
+                val requestsSinceLastAccess = if (cacheKey in requestHistory) {
+                    val lastIndex = requestHistory.lastIndexOf(cacheKey)
+                    requestHistory.subList(lastIndex + 1, requestHistory.size).distinct().size
+                } else {
+                    Int.MAX_VALUE
+                }
+
+                // Use cache if it's not expired and there haven't been too many different requests
+                cacheNotExpired && requestsSinceLastAccess < MAX_REQUESTS_BETWEEN_SAME_KEY
+            } else {
+                false
+            }
+        }
+
+        // Update request history
+        synchronized(this) {
+            requestHistory.add(cacheKey)
+            cacheTimestamps[cacheKey] = System.currentTimeMillis()
+        }
+
+        // Return cached result if conditions are met
+        if (shouldUseCache && localTrackDetails != null) {
             return Result.success(localMapper.toDomain(localTrackDetails))
         }
 
-        coroutineScope.launch {
-            if (localTrackDetails != null) localDataSource.delete(localTrackDetails)
-        }
-
+        // Otherwise fetch from network
         val remoteTrack = loadTrackDetailsFromNetwork(artist, title)
 
+        // Update local cache
         coroutineScope.launch {
             remoteTrack.onSuccess {
                 localDataSource.upsert(localMapper.toDto(it))
-                recordCacheUsage(cacheKey)
             }
         }
 
         return remoteTrack
-    }
-
-
-    private fun shouldUseCache(key: String): Boolean {
-        synchronized(recentRequests) {
-            val lastPosition = recentRequests.lastIndexOf(key)
-            if (lastPosition == -1) return true
-
-            val differentRequestsSinceLastUse = recentRequests
-                .subList(lastPosition + 1, recentRequests.size)
-                .distinct()
-                .count()
-
-            return differentRequestsSinceLastUse < DEFAULT_CACHE_MAX_ACCESS_COUNT
-        }
-    }
-
-    private fun recordCacheUsage(key: String) {
-        synchronized(recentRequests) {
-            recentRequests.add(key)
-            if (recentRequests.size > maxTrackedRequests) {
-                recentRequests.removeAt(0)
-            }
-        }
     }
 
     private suspend fun loadTrackDetailsFromNetwork(

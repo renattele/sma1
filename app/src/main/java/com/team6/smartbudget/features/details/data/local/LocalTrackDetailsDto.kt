@@ -13,5 +13,4 @@ data class LocalTrackDetailsDto(
     @ColumnInfo("published") val published: String,
     @ColumnInfo("summary") val summary: String,
     @ColumnInfo("updatedAt") val updatedAt: Long = System.currentTimeMillis(),
-    @ColumnInfo("accessedCount") val accessedCount: Int = 0
 )

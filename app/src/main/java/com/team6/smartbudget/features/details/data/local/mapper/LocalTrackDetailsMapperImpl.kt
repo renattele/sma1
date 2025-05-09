@@ -13,7 +13,6 @@ class LocalTrackDetailsMapperImpl @Inject constructor() : LocalTrackDetailsMappe
             thumbnailUrl = entity.thumbnailUrl,
             summary = entity.summary,
             published = entity.published,
-            accessedCount = 0
         )
     }
 
