@@ -1,0 +1,32 @@
+config:
+  validation: true
+  warningsAsErrors: false
+  excludes: ''
+
+naming:
+  FunctionNaming:
+    ignoreAnnotated: [ 'Composable' ]
+  TopLevelPropertyNaming:
+    constantPattern: '[A-Z][A-Za-z0-9]*'
+
+# Disabled formatting so Detekt and Ktlint don't conflict
+formatting:
+  active: false
+
+complexity:
+  TooManyFunctions:
+    ignoreAnnotated: [ 'Preview' ]
+  LongParameterList:
+    ignoreDefaultParameters: true
+
+style:
+  UnusedPrivateMember:
+    ignoreAnnotated: [ 'Preview', 'PreviewLightDark' ]
+  MagicNumber:
+    ignorePropertyDeclaration: true
+  UnusedImports:
+    active: true
+  ReturnCount:
+    max: 10
+  ForbiddenComment:
+    allowedPatterns: 'TODO:'
