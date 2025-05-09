@@ -79,11 +79,6 @@ android {
             )
             buildConfigField(
                 "String",
-                "API_KEY",
-                "\"${localProperties["api.key"]}\"",
-            )
-            buildConfigField(
-                "String",
                 "API_HOSTNAME",
                 "\"${localProperties["api.hostname"]}\"",
             )
