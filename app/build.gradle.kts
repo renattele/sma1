@@ -159,6 +159,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     detektPlugins(libs.detekt.formatting)
+
+    implementation(project(":features:onboarding"))
 }
 
 room {
