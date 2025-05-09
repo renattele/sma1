@@ -27,7 +27,7 @@ import com.team6.smartbudget.core.presentation.designsystem.theme.ProvideTextSty
 import com.team6.smartbudget.core.presentation.designsystem.theme.TPreviewTheme
 import com.team6.smartbudget.core.presentation.designsystem.theme.TTheme
 import com.team6.smartbudget.core.presentation.util.FullLineColumn
-import com.team6.smartbudget.sma1.R
+import com.team6.smartbudget.core.ui.R
 
 @Composable
 fun TBottomSheet(

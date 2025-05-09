@@ -22,14 +22,12 @@ interface RetrofitInterceptorsModule {
     @Singleton
     @IntoSet
     fun bindLastFmInterceptor(interceptor: LastFmInterceptor): Interceptor
+
+    @Binds
+    @Singleton
+    @IntoSet
+    fun bindApiKeyInterceptor(interceptor: ApiKeyInterceptor): Interceptor
 }
 
 @Module
-open class RetrofitInterceptorsProvidesModule {
-    @Provides
-    @Singleton
-    @IntoSet
-    fun provideApiKeyInterceptor(): Interceptor = ApiKeyInterceptor(
-        BuildConfig.API_KEY,
-    )
-}
+open class RetrofitInterceptorsProvidesModule

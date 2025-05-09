@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:domain"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -50,11 +51,14 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
     implementation(libs.coil.okhttp)
 
     ksp(libs.dagger.compiler)
     implementation(libs.dagger)
-    implementation(libs.androidx.viewmodel.compose)
+    implementation(libs.androidx.navigation.compose)
 }

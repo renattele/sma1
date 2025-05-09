@@ -53,4 +53,7 @@ dependencies {
 
     implementation(libs.kotlin.serialization.json)
     implementation(libs.androidx.datastore)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.serialization.kotlin)
 }
