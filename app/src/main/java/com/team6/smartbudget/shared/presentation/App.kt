@@ -32,7 +32,7 @@ fun App(modifier: Modifier = Modifier) {
                 NavHost(
                     controller,
                     modifier = Modifier.fillMaxSize(),
-                    startDestination = Destinations.Graph,
+                    startDestination = Destinations.Onboarding,
                 ) {
                     destinations(controller)
                 }
@@ -68,6 +68,8 @@ private fun NavGraphBuilder.destinations(controller: NavController) {
             controller.navigate(Destinations.TrackDetails(track.artist, track.title))
         }, onGoBack = {
             activity?.finish()
+        }, onGoToGraph = {
+            controller.navigate(Destinations.Graph)
         })
     }
     composable<Destinations.TrackDetails> {

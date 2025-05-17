@@ -24,4 +24,5 @@ sealed interface OverviewScreenEvent {
     data class GoToTrack(val track: TrackSummaryEntity) : OverviewScreenEvent
 
     data object GoBack : OverviewScreenEvent
+    data object GoToGraph : OverviewScreenEvent
 }

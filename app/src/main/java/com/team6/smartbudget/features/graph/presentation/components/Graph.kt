@@ -3,6 +3,7 @@ package com.team6.smartbudget.features.graph.presentation.components
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -78,7 +79,7 @@ private fun DrawScope.drawGraph(
 private fun DrawScope.drawAxes(
     params: GraphParams,
 ) {
-    repeat(params.widthAxesCount + 1) { index ->
+    repeat(params.widthAxesCount) { index ->
         drawLine(
             params.axesColor,
             Offset(index * size.width / (params.widthAxesCount - 1), 0f),
@@ -86,7 +87,7 @@ private fun DrawScope.drawAxes(
             params.axesLineWidth.toPx()
         )
     }
-    repeat(params.heightAxesCount + 1) { index ->
+    repeat(params.heightAxesCount) { index ->
         drawLine(
             params.axesColor,
             Offset(0f, index * size.height / (params.heightAxesCount - 1)),
@@ -101,17 +102,22 @@ private fun DrawScope.drawActualGraph(
     params: GraphParams
 ) {
     if (points.isEmpty()) return
-    val maxHeight = points.max()
-    points.withIndex().zipWithNext { p1, p2 ->
-        val point1WidthFraction = p1.index / (points.size.toFloat() - 1)
+    val actualPoints = if (points.size == 1) List(2) { points[0] } else points
+    val maxHeight = actualPoints.max()
+    actualPoints.withIndex().zipWithNext { p1, p2 ->
+        val point1WidthFraction = p1.index / (actualPoints.size.toFloat() - 1)
         val point1HeightFraction = 1f - p1.value / maxHeight.toFloat()
-        val point2WidthFraction = p2.index / (points.size.toFloat() - 1)
+        val point2WidthFraction = p2.index / (actualPoints.size.toFloat() - 1)
         val point2HeightFraction = 1f - p2.value / maxHeight.toFloat()
 
-        val xOffset =
-            Offset(point1WidthFraction * size.width, point1HeightFraction * size.height)
-        val yOffset =
-            Offset(point2WidthFraction * size.width, point2HeightFraction * size.height)
+        val xOffset = Offset(
+            point1WidthFraction * size.width,
+            point1HeightFraction * size.height
+        )
+        val yOffset = Offset(
+            point2WidthFraction * size.width,
+            point2HeightFraction * size.height
+        )
         drawLine(
             params.color,
             xOffset,
@@ -136,6 +142,7 @@ private fun DrawScope.drawActualGraph(
 private class GraphPointsProvider : CollectionPreviewParameterProvider<ImmutableList<Int>>(
     listOf(
         persistentListOf(),
+        persistentListOf(10),
         persistentListOf(2, 1, 3),
         persistentListOf(100, 1, 1000)
     )

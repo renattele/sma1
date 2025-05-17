@@ -19,6 +19,7 @@ class OverviewViewModel @Inject constructor(
     data class Dependencies(
         val onGoToTrack: (TrackSummaryEntity) -> Unit,
         val onGoBack: () -> Unit,
+        val onGoToGraph: () -> Unit,
     )
 
     init {
@@ -47,6 +48,7 @@ class OverviewViewModel @Inject constructor(
                 )
 
                 OverviewScreenEvent.GoBack -> dependencies().onGoBack()
+                OverviewScreenEvent.GoToGraph -> dependencies().onGoToGraph()
             }
         }
     }
