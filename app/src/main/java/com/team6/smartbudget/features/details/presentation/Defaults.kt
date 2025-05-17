@@ -2,6 +2,7 @@ package com.team6.smartbudget.features.details.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.team6.smartbudget.core.domain.DataSourceType
 import com.team6.smartbudget.features.details.domain.TrackDetailsEntity
 import com.team6.smartbudget.sma1.R
 
@@ -15,4 +16,5 @@ fun defaultTrackDetails(): TrackDetailsEntity = TrackDetailsEntity(
     thumbnailUrl = DefaultThumbnailUrl,
     summary = stringResource(R.string.label_summary),
     published = "27 January 2222",
+    sourceType = DataSourceType.Remote
 )

@@ -8,7 +8,10 @@ import com.team6.smartbudget.core.di.CoreModule
 import com.team6.smartbudget.core.domain.ApplicationConfig
 import com.team6.smartbudget.core.presentation.viewmodel.ViewModelFactoryModule
 import com.team6.smartbudget.features.details.di.DetailsModule
+import com.team6.smartbudget.features.graph.presentation.di.GraphPresentationModule
+import com.team6.smartbudget.features.onboarding.di.OnboardingModule
 import com.team6.smartbudget.features.overview.di.OverviewModule
+import com.team6.smartbudget.shared.data.DatabaseModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -19,9 +22,13 @@ import javax.inject.Singleton
         CoreModule::class,
         ViewModelFactoryModule::class,
         ConfigsModule::class,
+        DatabaseModule::class,
 
         OverviewModule::class,
         DetailsModule::class,
+        OnboardingModule::class,
+
+        GraphPresentationModule::class,
     ],
 )
 interface AppComponent {

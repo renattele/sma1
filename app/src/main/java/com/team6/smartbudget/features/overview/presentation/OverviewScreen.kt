@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,6 +20,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.team6.smartbudget.core.domain.TrackSummaryEntity
+import com.team6.smartbudget.core.presentation.designsystem.components.TButton
+import com.team6.smartbudget.core.presentation.designsystem.components.TButtonStyle
 import com.team6.smartbudget.core.presentation.designsystem.components.TErrorSheet
 import com.team6.smartbudget.core.presentation.designsystem.components.TScaffold
 import com.team6.smartbudget.core.presentation.designsystem.theme.TTheme
@@ -35,10 +40,11 @@ private const val DefaultPlaceholderTracksCount = 8
 fun OverviewScreen(
     onGoToTrack: (TrackSummaryEntity) -> Unit,
     onGoBack: () -> Unit,
+    onGoToGraph: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel = providedViewModel<OverviewViewModel.Dependencies, OverviewViewModel> {
-        OverviewViewModel.Dependencies(onGoToTrack, onGoBack)
+        OverviewViewModel.Dependencies(onGoToTrack, onGoBack, onGoToGraph)
     }
     val state = viewModel.state.collectAsState()
     OverviewScreen(state.value, onEvent = viewModel::handleEvent, modifier)
@@ -53,6 +59,12 @@ fun OverviewScreen(
 ) {
     TScaffold(modifier, title = {
         Text(stringResource(R.string.label_app_name))
+    }, backButton = {
+        TButton(onClick = {
+            onEvent(OverviewScreenEvent.GoToGraph)
+        }, style = TButtonStyle.flat()) {
+            Icon(Icons.Outlined.LocationOn, contentDescription = null)
+        }
     }) { padding ->
         when (state) {
             is OverviewScreenState.Failure -> OverviewScreenFailure(state, onEvent)

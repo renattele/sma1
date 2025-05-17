@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.datastore.core.DataStore
 import com.team6.smartbudget.core.data.AppSettings
 import com.team6.smartbudget.core.data.UuidSerializer
+import com.team6.smartbudget.core.data.di.CoreDataModule
 import com.team6.smartbudget.core.data.network.LastFmResponseJsonSerializer
 import com.team6.smartbudget.core.data.serializableDataStore
 import com.team6.smartbudget.core.domain.network.LastFmResponse
@@ -21,7 +22,13 @@ import javax.inject.Singleton
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-@Module(includes = [CoreProvidesModule::class, NetworkModule::class])
+@Module(
+    includes = [
+        CoreProvidesModule::class,
+        NetworkModule::class,
+        CoreDataModule::class
+    ]
+)
 abstract class CoreModule
 
 @Module

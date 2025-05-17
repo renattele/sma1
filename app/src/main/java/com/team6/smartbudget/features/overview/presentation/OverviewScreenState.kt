@@ -1,10 +1,12 @@
 package com.team6.smartbudget.features.overview.presentation
 
 import com.team6.smartbudget.core.domain.TrackSummaryEntity
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 sealed class OverviewScreenState {
     data class Success(
-        val tracks: List<TrackSummaryEntity> = listOf(),
+        val tracks: ImmutableList<TrackSummaryEntity> = persistentListOf(),
     ) : OverviewScreenState()
 
     data object Loading : OverviewScreenState()
@@ -22,4 +24,5 @@ sealed interface OverviewScreenEvent {
     data class GoToTrack(val track: TrackSummaryEntity) : OverviewScreenEvent
 
     data object GoBack : OverviewScreenEvent
+    data object GoToGraph : OverviewScreenEvent
 }

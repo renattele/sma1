@@ -1,6 +1,8 @@
 package com.team6.smartbudget.features.details.data.di
 
 import com.team6.smartbudget.features.details.data.TrackDetailsRepositoryImpl
+import com.team6.smartbudget.features.details.data.local.mapper.LocalTrackDetailsMapper
+import com.team6.smartbudget.features.details.data.local.mapper.LocalTrackDetailsMapperImpl
 import com.team6.smartbudget.features.details.data.remote.RemoteTrackDetailsDataSource
 import com.team6.smartbudget.features.details.data.remote.mapper.RemoteTrackDetailsMapper
 import com.team6.smartbudget.features.details.data.remote.mapper.RemoteTrackDetailsMapperImpl
@@ -21,6 +23,10 @@ interface DetailsDataModule {
     @Binds
     @Singleton
     fun bindTrackDetailsRepository(repository: TrackDetailsRepositoryImpl): TrackDetailsRepository
+
+    @Binds
+    @Singleton
+    fun bindLocalTrackMapper(mapper: LocalTrackDetailsMapperImpl): LocalTrackDetailsMapper
 }
 
 @Module
