@@ -44,6 +44,7 @@ fun TTextField(
     enabled: Boolean = true,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = false,
+    showError: Boolean? = null,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
 ) {
@@ -99,7 +100,7 @@ fun TTextField(
         singleLine = singleLine,
         maxLines = maxLines,
         minLines = minLines,
-        isError = action.isError,
+        isError = showError ?: action.isError,
         readOnly = action.readOnly,
     )
 }

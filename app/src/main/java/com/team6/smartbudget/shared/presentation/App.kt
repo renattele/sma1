@@ -18,6 +18,7 @@ import com.team6.smartbudget.core.presentation.navigation.ModalBottomSheetLayout
 import com.team6.smartbudget.core.presentation.navigation.rememberBottomSheetNavigator
 import com.team6.smartbudget.core.presentation.viewmodel.LocalViewModelFactory
 import com.team6.smartbudget.features.details.presentation.DetailsScreen
+import com.team6.smartbudget.features.graph.presentation.GraphScreen
 import com.team6.smartbudget.features.onboarding.OnboardingScreen
 import com.team6.smartbudget.features.overview.presentation.OverviewScreen
 
@@ -31,7 +32,7 @@ fun App(modifier: Modifier = Modifier) {
                 NavHost(
                     controller,
                     modifier = Modifier.fillMaxSize(),
-                    startDestination = Destinations.Onboarding,
+                    startDestination = Destinations.Graph,
                 ) {
                     destinations(controller)
                 }
@@ -74,5 +75,9 @@ private fun NavGraphBuilder.destinations(controller: NavController) {
         DetailsScreen(route.artist, route.title, onGoBack = {
             controller.navigateUp()
         })
+    }
+
+    composable<Destinations.Graph> {
+        GraphScreen()
     }
 }

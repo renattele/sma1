@@ -27,4 +27,12 @@
     </string>
     <string name="label_latest_result">Latest result</string>
     <string name="label_from_cache">Cached</string>
+    <string name="label_graph">Graphs</string>
+    <string name="label_points">Points (separated by \",\")</string>
+    <string name="label_count_of_points">Count of points</string>
+    <string name="label_count_of_points_should_be_valid">Count of points should be positibe number</string>
+    <string name="label_points_should_be_valid">Points should be valid: separated by \",\" and all positive</string>
+    <string name="label_render">Render</string>
+    <string name="label_actual_point_count_show_me_same">Actual points could don\'t match entered count of points
+    </string>
 </resources>

@@ -6,6 +6,7 @@ import com.team6.smartbudget.core.domain.exception.InvalidApiKeyException
 import com.team6.smartbudget.core.presentation.viewmodel.ProvidedViewModel
 import com.team6.smartbudget.features.overview.domain.TopTracksRepository
 import com.team6.smartbudget.features.overview.presentation.OverviewScreenState.FailureReason
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,7 +24,7 @@ class OverviewViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             topTrackRepository.getTopTracks().onSuccess { tracks ->
-                _state.update { OverviewScreenState.Success(tracks) }
+                _state.update { OverviewScreenState.Success(tracks.toImmutableList()) }
             }.onFailure { error ->
                 val reason = when (error) {
                     is InvalidApiKeyException -> FailureReason.InvalidApiKey
