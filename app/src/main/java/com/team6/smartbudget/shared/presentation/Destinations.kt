@@ -11,4 +11,7 @@ object Destinations {
 
     @Serializable
     data object Onboarding
+
+    @Serializable
+    data object Graph
 }

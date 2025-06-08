@@ -18,6 +18,7 @@ import com.team6.smartbudget.core.presentation.navigation.ModalBottomSheetLayout
 import com.team6.smartbudget.core.presentation.navigation.rememberBottomSheetNavigator
 import com.team6.smartbudget.core.presentation.viewmodel.LocalViewModelFactory
 import com.team6.smartbudget.features.details.presentation.DetailsScreen
+import com.team6.smartbudget.features.graph.presentation.GraphScreen
 import com.team6.smartbudget.features.onboarding.OnboardingScreen
 import com.team6.smartbudget.features.overview.presentation.OverviewScreen
 
@@ -67,6 +68,8 @@ private fun NavGraphBuilder.destinations(controller: NavController) {
             controller.navigate(Destinations.TrackDetails(track.artist, track.title))
         }, onGoBack = {
             activity?.finish()
+        }, onGoToGraph = {
+            controller.navigate(Destinations.Graph)
         })
     }
     composable<Destinations.TrackDetails> {
@@ -74,5 +77,9 @@ private fun NavGraphBuilder.destinations(controller: NavController) {
         DetailsScreen(route.artist, route.title, onGoBack = {
             controller.navigateUp()
         })
+    }
+
+    composable<Destinations.Graph> {
+        GraphScreen()
     }
 }
