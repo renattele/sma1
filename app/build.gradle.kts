@@ -79,11 +79,6 @@ android {
             )
             buildConfigField(
                 "String",
-                "API_KEY",
-                "\"${localProperties["api.key"]}\"",
-            )
-            buildConfigField(
-                "String",
                 "API_HOSTNAME",
                 "\"${localProperties["api.hostname"]}\"",
             )
@@ -125,6 +120,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
+    implementation(project(":features:onboarding"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -159,6 +158,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     detektPlugins(libs.detekt.formatting)
+
+    implementation(project(":features:onboarding"))
 }
 
 room {

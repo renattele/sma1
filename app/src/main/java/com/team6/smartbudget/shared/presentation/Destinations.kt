@@ -8,4 +8,7 @@ object Destinations {
 
     @Serializable
     data class TrackDetails(val artist: String, val title: String)
+
+    @Serializable
+    data object Onboarding
 }

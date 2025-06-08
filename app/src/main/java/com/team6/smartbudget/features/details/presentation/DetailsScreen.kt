@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
+import com.team6.smartbudget.core.domain.DataSourceType
 import com.team6.smartbudget.core.presentation.designsystem.components.NetworkImage
 import com.team6.smartbudget.core.presentation.designsystem.components.TErrorSheet
 import com.team6.smartbudget.core.presentation.designsystem.theme.TTheme
@@ -103,6 +104,18 @@ private fun DetailsScreenUniversal(
                 .fillMaxWidth(),
         )
         Text(
+            stringResource(
+                when (state?.track?.sourceType) {
+                    DataSourceType.Remote -> R.string.label_latest_result
+                    DataSourceType.Local -> R.string.label_from_cache
+                    null -> R.string.placeholder_short
+                }
+            ),
+            Modifier.shimmer(state == null, shape = TTheme.shape.m),
+            style = TTheme.typography.bodyS,
+            color = TTheme.colorScheme.onBackgroundLow
+        )
+        Text(
             state?.track?.title ?: stringResource(R.string.placeholder_short),
             Modifier.shimmer(state == null, shape = TTheme.shape.m),
             style = TTheme.typography.heading2,
@@ -137,7 +150,7 @@ class DetailsScreenStateProvider :
 @Composable
 private fun DetailsScreenPreview(
     @PreviewParameter(DetailsScreenStateProvider::class) state:
-        @Composable () -> DetailsScreenState,
+    @Composable () -> DetailsScreenState,
 ) {
     TTheme {
         DetailsScreen(state(), onEvent = {})

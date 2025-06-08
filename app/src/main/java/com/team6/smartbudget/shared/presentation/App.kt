@@ -18,6 +18,7 @@ import com.team6.smartbudget.core.presentation.navigation.ModalBottomSheetLayout
 import com.team6.smartbudget.core.presentation.navigation.rememberBottomSheetNavigator
 import com.team6.smartbudget.core.presentation.viewmodel.LocalViewModelFactory
 import com.team6.smartbudget.features.details.presentation.DetailsScreen
+import com.team6.smartbudget.features.onboarding.OnboardingScreen
 import com.team6.smartbudget.features.overview.presentation.OverviewScreen
 
 @Composable
@@ -30,7 +31,7 @@ fun App(modifier: Modifier = Modifier) {
                 NavHost(
                     controller,
                     modifier = Modifier.fillMaxSize(),
-                    startDestination = Destinations.Overview,
+                    startDestination = Destinations.Onboarding,
                 ) {
                     destinations(controller)
                 }
@@ -50,6 +51,16 @@ private fun ProvideDependencies(content: @Composable () -> Unit) {
 }
 
 private fun NavGraphBuilder.destinations(controller: NavController) {
+    composable<Destinations.Onboarding> {
+        OnboardingScreen(onNext = {
+            controller.navigate(Destinations.Overview) {
+                popUpTo(Destinations.Onboarding) {
+                    inclusive = true
+                }
+            }
+        })
+    }
+
     composable<Destinations.Overview> {
         val activity = LocalActivity.current
         OverviewScreen(onGoToTrack = { track ->
