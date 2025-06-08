@@ -11,4 +11,7 @@ sealed interface Destination {
 
     @Serializable
     data object Onboarding : Destination
+
+    @Serializable
+    data object Graph: Destination
 }

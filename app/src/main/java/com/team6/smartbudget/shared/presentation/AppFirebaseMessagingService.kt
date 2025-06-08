@@ -3,6 +3,8 @@ package com.team6.smartbudget.shared.presentation
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -12,9 +14,19 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.team6.smartbudget.MainActivity
+import com.team6.smartbudget.component
+import com.team6.smartbudget.core.domain.usecase.GetApiKeyUseCase
 import com.team6.smartbudget.sma1.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class AppFirebaseMessagingService : FirebaseMessagingService() {
+
+    @Inject
+    lateinit var getApiKeyUseCase: GetApiKeyUseCase
 
     companion object {
         const val TAG = "FCMService"
@@ -22,6 +34,11 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         const val CATEGORY_NOTIFICATION = "notification"
         const val CATEGORY_SILENT = "silent"
         const val CATEGORY_NAVIGATION = "navigation"
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        component.inject(this)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -32,14 +49,16 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         val crashlytics = FirebaseCrashlytics.getInstance()
         crashlytics.log("FCM message received: ${remoteMessage.data}")
 
-        if (remoteMessage.data.isNotEmpty()) {
-            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
+        runBlocking(Dispatchers.IO) {
+            if (remoteMessage.data.isNotEmpty()) {
+                Log.d(TAG, "Message data payload: ${remoteMessage.data}")
 
-            when (val category = remoteMessage.data["category"]) {
-                CATEGORY_NOTIFICATION -> handleNotificationCategory(remoteMessage.data)
-                CATEGORY_SILENT -> handleSilentCategory(remoteMessage.data)
-                CATEGORY_NAVIGATION -> handleNavigationCategory(remoteMessage.data)
-                else -> Log.w(TAG, "Unknown category: $category")
+                when (val category = remoteMessage.data["category"]) {
+                    CATEGORY_NOTIFICATION -> handleNotificationCategory(remoteMessage.data)
+                    CATEGORY_SILENT -> handleSilentCategory(remoteMessage.data)
+                    CATEGORY_NAVIGATION -> handleNavigationCategory(remoteMessage.data)
+                    else -> Log.w(TAG, "Unknown category: $category")
+                }
             }
         }
     }
@@ -85,7 +104,7 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         crashlytics.setCustomKey("last_silent_notification", "$category:$extraData")
     }
 
-    private fun handleNavigationCategory(data: Map<String, String>) {
+    private suspend fun handleNavigationCategory(data: Map<String, String>) {
         val targetScreen = data["target_screen"] ?: ""
         val requiresAuth = data["requires_auth"]?.toBoolean() ?: false
 
@@ -97,11 +116,15 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         when (targetScreen) {
             "detail" -> {
                 if (MainActivity.destination?.hasRoute<Destination.TrackDetails>() == true) {
+                    val destination = MainActivity.destination
                     showToast(getString(R.string.label_already_on_screen))
                 } else if (requiresAuth && !isUserAuthenticated()) {
                     showToast(getString(R.string.label_requires_auth))
                 } else {
-                    MainActivity.navigate(Destination.TrackDetails)
+                    MainActivity.navigate(Destination.TrackDetails(
+                        artist = data["artist"] ?: return,
+                        title = data["title"] ?: return
+                    ))
                 }
             }
 
@@ -111,13 +134,16 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun isUserAuthenticated(): Boolean {
-        val prefs = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
-        return prefs.getBoolean("is_authenticated", false)
+    private suspend fun isUserAuthenticated(): Boolean {
+        return getApiKeyUseCase().first() != null
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    private suspend fun showToast(message: String) {
+        withContext(Dispatchers.Main) {
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(this@AppFirebaseMessagingService, message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun createNotificationChannel() {

@@ -71,7 +71,7 @@ private fun NavGraphBuilder.destinations(controller: NavController) {
         }, onGoBack = {
             activity?.finish()
         }, onGoToGraph = {
-            controller.navigate(Destinations.Graph)
+            controller.navigate(Destination.Graph)
         })
     }
     composable<Destination.TrackDetails> {
@@ -81,7 +81,7 @@ private fun NavGraphBuilder.destinations(controller: NavController) {
         })
     }
 
-    composable<Destinations.Graph> {
+    composable<Destination.Graph> {
         GraphScreen()
     }
 }

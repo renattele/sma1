@@ -31,6 +31,7 @@ coil = "3.1.0"
 firebaseBom = "33.14.0"
 gms = "4.4.2"
 crashlytics = "3.0.3"
+collections-immutable = "0.3.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -70,10 +71,13 @@ kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializat
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "collections-immutable" }
+
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
+firebase-config = { module = "com.google.firebase:firebase-config-ktx"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

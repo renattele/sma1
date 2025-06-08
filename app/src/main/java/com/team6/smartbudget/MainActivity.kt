@@ -7,11 +7,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.team6.smartbudget.core.presentation.navigation.rememberBottomSheetNavigator
 import com.team6.smartbudget.shared.presentation.App
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     companion object {
@@ -21,6 +24,7 @@ class MainActivity : ComponentActivity() {
             private set
 
         var navigate: (Any) -> Unit = {}
+            private set
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +34,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             val bottomSheetNavigator = rememberBottomSheetNavigator()
             val controller = rememberNavController(bottomSheetNavigator)
-            val destination = controller.currentBackStackEntryAsState().value?.destination
-            LaunchedEffect(destination) {
-                MainActivity.destination = destination
+            val backStackEntry = controller.currentBackStackEntryAsState().value
+            val coroutineScope = rememberCoroutineScope()
+            LaunchedEffect(backStackEntry) {
+                destination = backStackEntry?.destination
                 navigate = {
-                    controller.navigate(it)
+                    coroutineScope.launch(Dispatchers.Main) {
+                        controller.navigate(it)
+                    }
                 }
             }
             App(
