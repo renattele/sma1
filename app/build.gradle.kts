@@ -160,7 +160,6 @@ dependencies {
     detektPlugins(libs.detekt.formatting)
 
     implementation(libs.kotlinx.collections.immutable)
-
     implementation(project(":features:onboarding"))
 }
 

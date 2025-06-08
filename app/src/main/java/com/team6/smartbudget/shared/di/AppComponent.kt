@@ -27,7 +27,6 @@ import javax.inject.Singleton
         OverviewModule::class,
         DetailsModule::class,
         OnboardingModule::class,
-
         GraphPresentationModule::class,
     ],
 )

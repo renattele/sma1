@@ -27,6 +27,7 @@
     </string>
     <string name="label_latest_result">Latest result</string>
     <string name="label_from_cache">Cached</string>
+
     <string name="label_graph">Graphs</string>
     <string name="label_points">Points (separated by \",\")</string>
     <string name="label_count_of_points">Count of points</string>
