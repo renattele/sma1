@@ -1,5 +1,6 @@
 package com.team6.smartbudget.shared.presentation
 
+import android.widget.Toast
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -21,12 +22,15 @@ import com.team6.smartbudget.features.details.presentation.DetailsScreen
 import com.team6.smartbudget.features.graph.presentation.GraphScreen
 import com.team6.smartbudget.features.onboarding.OnboardingScreen
 import com.team6.smartbudget.features.overview.presentation.OverviewScreen
+import com.team6.smartbudget.shared.domain.AppConfig
+import com.team6.smartbudget.sma1.R
 
 @Composable
 fun App(
-    modifier: Modifier = Modifier,
+    config: AppConfig,
     bottomSheetNavigator: BottomSheetNavigator,
     controller: NavHostController,
+    modifier: Modifier = Modifier,
 ) {
     ProvideDependencies {
         TTheme {
@@ -36,7 +40,7 @@ fun App(
                     modifier = Modifier.fillMaxSize(),
                     startDestination = Destination.Onboarding,
                 ) {
-                    destinations(controller)
+                    destinations(config, controller)
                 }
             }
         }
@@ -53,7 +57,7 @@ private fun ProvideDependencies(content: @Composable () -> Unit) {
     )
 }
 
-private fun NavGraphBuilder.destinations(controller: NavController) {
+private fun NavGraphBuilder.destinations(config: AppConfig, controller: NavController) {
     composable<Destination.Onboarding> {
         OnboardingScreen(onNext = {
             controller.navigate(Destination.Overview) {
@@ -66,8 +70,14 @@ private fun NavGraphBuilder.destinations(controller: NavController) {
 
     composable<Destination.Overview> {
         val activity = LocalActivity.current
+        val context = LocalContext.current
         OverviewScreen(onGoToTrack = { track ->
-            controller.navigate(Destination.TrackDetails(track.artist, track.title))
+            if (config.detailsEnabled) {
+                controller.navigate(Destination.TrackDetails(track.artist, track.title))
+            } else {
+                Toast.makeText(context, R.string.label_feature_not_available, Toast.LENGTH_SHORT)
+                    .show()
+            }
         }, onGoBack = {
             activity?.finish()
         }, onGoToGraph = {

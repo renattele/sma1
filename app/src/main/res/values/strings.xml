@@ -42,4 +42,5 @@
     <string name="label_render">Render</string>
     <string name="label_actual_point_count_show_me_same">Actual points could don\'t match entered count of points
     </string>
+    <string name="label_feature_not_available">This feature is not available yet</string>
 </resources>

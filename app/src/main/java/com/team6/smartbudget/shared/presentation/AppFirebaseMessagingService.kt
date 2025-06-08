@@ -115,16 +115,19 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
 
         when (targetScreen) {
             "detail" -> {
-                if (MainActivity.destination?.hasRoute<Destination.TrackDetails>() == true) {
-                    val destination = MainActivity.destination
+                if (!MainActivity.appConfig.detailsEnabled) {
+                    return
+                } else if (MainActivity.destination?.hasRoute<Destination.TrackDetails>() == true) {
                     showToast(getString(R.string.label_already_on_screen))
                 } else if (requiresAuth && !isUserAuthenticated()) {
                     showToast(getString(R.string.label_requires_auth))
                 } else {
-                    MainActivity.navigate(Destination.TrackDetails(
-                        artist = data["artist"] ?: return,
-                        title = data["title"] ?: return
-                    ))
+                    MainActivity.navigate(
+                        Destination.TrackDetails(
+                            artist = data["artist"] ?: return,
+                            title = data["title"] ?: return
+                        )
+                    )
                 }
             }
 
