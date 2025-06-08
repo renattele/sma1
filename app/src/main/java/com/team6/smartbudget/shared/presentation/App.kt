@@ -5,6 +5,8 @@ import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
@@ -32,6 +34,7 @@ fun App(
     controller: NavHostController,
     modifier: Modifier = Modifier,
 ) {
+    val updatedConfig by rememberUpdatedState(config)
     ProvideDependencies {
         TTheme {
             ModalBottomSheetLayout(bottomSheetNavigator, modifier) {
@@ -40,7 +43,7 @@ fun App(
                     modifier = Modifier.fillMaxSize(),
                     startDestination = Destination.Onboarding,
                 ) {
-                    destinations(config, controller)
+                    destinations({updatedConfig}, controller)
                 }
             }
         }
@@ -57,7 +60,7 @@ private fun ProvideDependencies(content: @Composable () -> Unit) {
     )
 }
 
-private fun NavGraphBuilder.destinations(config: AppConfig, controller: NavController) {
+private fun NavGraphBuilder.destinations(config: () -> AppConfig, controller: NavController) {
     composable<Destination.Onboarding> {
         OnboardingScreen(onNext = {
             controller.navigate(Destination.Overview) {
@@ -72,7 +75,7 @@ private fun NavGraphBuilder.destinations(config: AppConfig, controller: NavContr
         val activity = LocalActivity.current
         val context = LocalContext.current
         OverviewScreen(onGoToTrack = { track ->
-            if (config.detailsEnabled) {
+            if (config().detailsEnabled) {
                 controller.navigate(Destination.TrackDetails(track.artist, track.title))
             } else {
                 Toast.makeText(context, R.string.label_feature_not_available, Toast.LENGTH_SHORT)

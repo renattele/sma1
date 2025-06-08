@@ -94,19 +94,20 @@ class MainActivity : ComponentActivity() {
         crashlytics?.setCustomKey("user_id", userId)
         crashlytics?.setCustomKey("screen_name", "MainActivity")
 
-        val remoteConfig = FirebaseRemoteConfig.getInstance()
+        remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = 3600
+            minimumFetchIntervalInSeconds = 0
         }
-        remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig?.setConfigSettingsAsync(configSettings)
 
         val defaults = mapOf(FEATURE_DETAILS_ENABLED_KEY to true)
-        remoteConfig.setDefaultsAsync(defaults)
+        remoteConfig?.setDefaultsAsync(defaults)
 
         fetchRemoteConfig()
     }
 
     private fun fetchRemoteConfig() {
+        println("AAAAAAfffff")
         remoteConfig?.fetchAndActivate()
             ?.addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -114,6 +115,8 @@ class MainActivity : ComponentActivity() {
                         detailsEnabled = remoteConfig?.getBoolean(FEATURE_DETAILS_ENABLED_KEY)
                             ?: false
                     )
+                    println(remoteConfig?.getBoolean(FEATURE_DETAILS_ENABLED_KEY))
+                    println(appConfig)
                     crashlytics?.setCustomKey("remote_config_fetch", "success")
                 } else {
                     crashlytics?.setCustomKey("remote_config_fetch", "failed")
