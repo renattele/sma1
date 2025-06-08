@@ -13,6 +13,8 @@ plugins {
     alias(libs.plugins.androidx.room)
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.google.crashlytics)
 }
 
 fun loadProperties(vararg files: File): Properties {
@@ -160,7 +162,13 @@ dependencies {
     detektPlugins(libs.detekt.formatting)
 
     implementation(project(":features:onboarding"))
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.messaging)
 }
+
 
 room {
     schemaDirectory("$rootDir/schemas")
