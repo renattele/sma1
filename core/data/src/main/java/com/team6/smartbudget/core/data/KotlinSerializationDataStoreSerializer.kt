@@ -39,22 +39,3 @@ internal class KotlinSerializationDataStoreSerializer<T>(
     }
 }
 
-fun <T> Context.serializableDataStore(
-    fileName: String,
-    defaultValue: T,
-    serializer: KSerializer<T>,
-    json: Json = Json,
-): DataStore<T> {
-    val dataStoreSerializer =
-        KotlinSerializationDataStoreSerializer(
-            defaultValue = defaultValue,
-            serializer = serializer,
-            json = json,
-        )
-    val store =
-        dataStore(
-            fileName = fileName,
-            serializer = dataStoreSerializer,
-        )
-    return store.getValue(this, dataStoreSerializer::defaultValue)
-}
