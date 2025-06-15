@@ -53,7 +53,8 @@ class MainActivity : ComponentActivity() {
         component.inject(this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val chartView = CircularChartView(this)
+        setContentView(R.layout.activity_main)
+        val chartView = findViewById<CircularChartView>(R.id.chart_view)
 
         val sectors = listOf(
             ChartSector(
@@ -85,7 +86,6 @@ class MainActivity : ComponentActivity() {
         )
 
         chartView.setData(data)
-        setContentView(chartView)
         requestNotificationPermission()
         setupFirebase()
     }
