@@ -12,6 +12,7 @@ import com.team6.smartbudget.features.graph.presentation.di.GraphPresentationMod
 import com.team6.smartbudget.features.onboarding.di.OnboardingModule
 import com.team6.smartbudget.features.overview.di.OverviewModule
 import com.team6.smartbudget.shared.data.DatabaseModule
+import com.team6.smartbudget.shared.presentation.AppFirebaseMessagingService
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -35,6 +36,8 @@ interface AppComponent {
     val configs: Set<@JvmSuppressWildcards ApplicationConfig>
 
     fun inject(activity: MainActivity)
+
+    fun inject(service: AppFirebaseMessagingService)
 
     @Component.Factory
     interface Factory {

@@ -101,7 +101,6 @@ fun TTextField(
         maxLines = maxLines,
         minLines = minLines,
         isError = showError ?: action.isError,
-        isError = action.isError,
         readOnly = action.readOnly,
     )
 }
