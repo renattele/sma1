@@ -27,6 +27,12 @@
     </string>
     <string name="label_latest_result">Latest result</string>
     <string name="label_from_cache">Cached</string>
+    <string name="label_notification_title">Title</string>
+    <string name="label_notification_message">Default message</string>
+    <string name="label_already_on_screen">You are already on this screen</string>
+    <string name="label_requires_auth">This feature requires auth</string>
+    <string name="label_notification_channel">Default</string>
+    <string name="label_notification_channel_description">Default Channel</string>
 
     <string name="label_graph">Graphs</string>
     <string name="label_points">Points (separated by \",\")</string>
@@ -36,4 +42,5 @@
     <string name="label_render">Render</string>
     <string name="label_actual_point_count_show_me_same">Actual points could don\'t match entered count of points
     </string>
+    <string name="label_feature_not_available">This feature is not available yet</string>
 </resources>
