@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircularChartView">
+        <attr name="cco_iconSize" format="dimension" />
+        <attr name="cco_ringWidth" format="dimension" />
+        <attr name="cco_ringSpacing" format="dimension" />
+        <attr name="cco_percentSize" format="dimension" />
+        <attr name="cco_titleSize" format="dimension" />
+        <attr name="cco_subtitleSize" format="dimension" />
+        <attr name="cco_selectedBrightnessMultiplier" format="float" />
+        <attr name="cco_centerTextColor" format="color" />
+        <attr name="cco_centerSubtitleTextColor" format="color" />
+    </declare-styleable>
+</resources>

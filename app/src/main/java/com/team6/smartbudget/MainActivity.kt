@@ -2,6 +2,7 @@ package com.team6.smartbudget
 
 import android.Manifest
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,10 +21,15 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.get
 import com.google.firebase.remoteconfig.remoteConfigSettings
 import com.team6.smartbudget.core.presentation.navigation.rememberBottomSheetNavigator
+import com.team6.smartbudget.features.chart.presentation.ChartSector
+import com.team6.smartbudget.features.chart.presentation.CircularChartView
 import com.team6.smartbudget.shared.domain.AppConfig
 import com.team6.smartbudget.shared.presentation.App
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.core.graphics.toColorInt
+import com.team6.smartbudget.features.chart.presentation.ChartData
+import com.team6.smartbudget.sma1.R
 
 class MainActivity : ComponentActivity() {
     companion object {
@@ -47,25 +53,39 @@ class MainActivity : ComponentActivity() {
         component.inject(this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            val bottomSheetNavigator = rememberBottomSheetNavigator()
-            val controller = rememberNavController(bottomSheetNavigator)
-            val backStackEntry = controller.currentBackStackEntryAsState().value
-            val coroutineScope = rememberCoroutineScope()
-            LaunchedEffect(backStackEntry) {
-                destination = backStackEntry?.destination
-                navigate = {
-                    coroutineScope.launch(Dispatchers.Main) {
-                        controller.navigate(it)
-                    }
-                }
-            }
-            App(
-                config = appConfig,
-                bottomSheetNavigator = bottomSheetNavigator,
-                controller = controller,
+        setContentView(R.layout.activity_main)
+        val chartView = findViewById<CircularChartView>(R.id.chart_view)
+
+        val sectors = listOf(
+            ChartSector(
+                52f,
+                "#8BC34A".toColorInt(),
+                iconRes = R.drawable.ic_outline_fastfood_24
+            ),
+            ChartSector(
+                60f,
+                "#00BCD4".toColorInt(),
+                iconRes = R.drawable.ic_outline_warning_24
+            ),
+            ChartSector(
+                70f,
+                "#607D8B".toColorInt(),
+                iconRes = R.drawable.ic_outline_fastfood_24
+            ),
+            ChartSector(
+                80f,
+                "#2196F3".toColorInt(),
+                iconRes = R.drawable.ic_outline_fastfood_24
             )
-        }
+        )
+        val data = ChartData(
+            icon = R.drawable.ic_outline_warning_24,
+            title = getString(R.string.label_title),
+            subtitle = getString(R.string.label_subtitle),
+            sectors = sectors
+        )
+
+        chartView.setData(data)
         requestNotificationPermission()
         setupFirebase()
     }
